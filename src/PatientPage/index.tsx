@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Patient } from "../types";
+import { Entry, Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import { useStateValue, setPatient } from "../state";
 
@@ -32,8 +32,23 @@ const fetchPatientInfo = async () => {
             if (patient.id === id) {
               return <p>
                   <div><strong>{patient.name}</strong></div>
+                  <p></p>
                     <div>ssn: {patient.ssn}</div>
                     <div>Occupation: {patient.occupation}</div>
+                    <p></p>
+                    <div><strong>Entries</strong></div>
+                    <p></p>
+                    <div>{patient.entries.map((entry: Entry) => {
+                    return (
+                      <>
+                        <p key={entry.id}>{entry.date}<i>{' '+entry.description}</i></p>
+                        <ul>
+                          {entry.diagnosisCodes && entry.diagnosisCodes.map((code: string) =>
+                            <li key={code}>{code}</li>)}
+                        </ul>
+                      </>
+                    );
+                  })}</div>
                     </p>;}
           })}
     </div>
